@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Courses | Computer Academy</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fc;
+      color: #222;
+    }
+
+    header {
+      background: #142b55;
+      color: white;
+      padding: 22px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    header h2 {
+      font-size: 25px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 18px;
+      font-weight: bold;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #142b55, #2878d0);
+      color: white;
+      text-align: center;
+      padding: 65px 20px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 45px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+      color: #142b55;
+      font-size: 30px;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .course-card {
+      background: white;
+      padding: 28px 22px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .course-icon {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .course-card h3 {
+      color: #142b55;
+      margin-bottom: 12px;
+      font-size: 21px;
+    }
+
+    .course-card p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .duration {
+      display: block;
+      color: #2878d0;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .enroll-btn {
+      display: inline-block;
+      background: #2878d0;
+      color: white;
+      text-decoration: none;
+      padding: 11px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .enroll-btn:hover {
+      background: #142b55;
+    }
+
+    footer {
+      background: #142b55;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    @media(max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav a {
+        margin: 5px;
+        display: inline-block;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>Computer Academy</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="enrollment.html">Enroll</a>
+      <a href="authentication.html">Login</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Explore Our Computer Courses</h1>
+    <p>Learn new skills, improve your knowledge and build your future with us.</p>
+  </section>
+
+  <main class="container">
+    <h2 class="section-title">Our Popular Courses</h2>
+
+    <div class="course-grid">
+
+      <div class="course-card">
+        <div class="course-icon">💻</div>
+        <h3>Basic Computer</h3>
+        <p>Learn computer fundamentals, typing, internet and basic computer operations.</p>
+        <span class="duration">Duration: 2 Months</span>
+        <a href="enrollment.html" class="enroll-btn">Enroll Now</a>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">🌐</div>
+        <h3>Web Development</h3>
+        <p>Learn HTML, CSS and JavaScript to create attractive and responsive websites.</p>
+        <span class="duration">Duration: 4 Months</span>
+        <a href="enrollment.html" class="enroll-btn">Enroll Now</a>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">🐍</div>
+        <h3>Python Programming</h3>
+        <p>Understand programming concepts and learn to write Python programs.</p>
+        <span class="duration">Duration: 3 Months</span>
+        <a href="enrollment.html" class="enroll-btn">Enroll Now</a>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">📊</div>
+        <h3>MS Office</h3>
+        <p>Learn MS Word, Excel and PowerPoint for everyday office work.</p>
+        <span class="duration">Duration: 2 Months</span>
+        <a href="enrollment.html" class="enroll-btn">Enroll Now</a>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">🗄️</div>
+        <h3>Database Management</h3>
+        <p>Learn database concepts, data organization and basic SQL operations.</p>
+        <span class="duration">Duration: 3 Months</span>
+        <a href="enrollment.html" class="enroll-btn">Enroll Now</a>
+      </div>
+
+      <div class="course-card">
+        <div class="course-icon">🎨</div>
+        <h3>Graphic Design</h3>
+        <p>Explore design principles, creative layouts and digital graphics.</p>
+        <span class="duration">Duration: 3 Months</span>
+        <a href="enrollment.html" class="enroll-btn">Enroll Now</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Computer Academy | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>
