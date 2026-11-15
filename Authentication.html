@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Computer Academy</title>
+  <title>Student Login | Computer Academy</title>
 
   <style>
     * {
@@ -22,10 +22,9 @@
     header {
       background: #142b55;
       color: white;
-      padding: 22px 8%;
+      padding: 20px 8%;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -33,19 +32,18 @@
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 15px;
-      font-weight: bold;
+      margin-left: 12px;
     }
 
     .container {
-      max-width: 430px;
-      margin: 55px auto;
+      max-width: 450px;
+      margin: 45px auto;
       padding: 20px;
     }
 
     .login-box {
       background: white;
-      padding: 35px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.09);
     }
@@ -53,18 +51,33 @@
     h1 {
       text-align: center;
       color: #142b55;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tabs button.active {
+      background: #2878d0;
+      color: white;
     }
 
     label {
       display: block;
-      margin: 16px 0 8px;
+      margin: 15px 0 7px;
       font-weight: bold;
     }
 
@@ -76,7 +89,7 @@
       font-size: 15px;
     }
 
-    button {
+    #submitBtn {
       width: 100%;
       padding: 14px;
       background: #2878d0;
@@ -89,14 +102,11 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background: #142b55;
-    }
-
-    .signup {
+    #message {
+      margin-top: 18px;
       text-align: center;
-      margin-top: 20px;
-      color: #555;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
     }
 
     footer {
@@ -110,44 +120,129 @@
 
 <body>
 
-  <header>
-    <h2>Computer Academy</h2>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="enrollment.html">Enroll</a>
-    </nav>
-  </header>
+<header>
+  <h2>Computer Academy</h2>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="enrollment.html">Enroll</a>
+  </nav>
+</header>
 
-  <div class="container">
-    <div class="login-box">
-      <h1>Welcome Back!</h1>
-      <p class="subtitle">Login to your student account</p>
+<div class="container">
+  <div class="login-box">
 
-      <form id="loginForm">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+    <h1 id="heading">Student Login</h1>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" required minlength="6">
-
-        <button type="submit">Login</button>
-      </form>
-
-      <p class="signup">New student? Sign up option will be added with Firebase.</p>
+    <div class="tabs">
+      <button type="button" id="loginTab" class="active">Login</button>
+      <button type="button" id="signupTab">Sign Up</button>
     </div>
+
+    <form id="authForm">
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email"
+        placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password"
+        placeholder="Minimum 6 characters"
+        minlength="6" required>
+
+      <button type="submit" id="submitBtn">Login</button>
+
+    </form>
+
+    <p id="message" role="status"></p>
+
   </div>
+</div>
 
-  <footer>
-    <p>© 2026 Computer Academy | All Rights Reserved</p>
-  </footer>
+<footer>
+  <p>© 2026 Computer Academy | All Rights Reserved</p>
+</footer>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      alert("Login page is ready. Firebase Authentication will be connected next.");
-    });
-  </script>
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCbDOwqgUGplj6vY_DcymHK1HkjHN9aJOg",
+    authDomain: "computer-course-enrollme-e0cad.firebaseapp.com",
+    projectId: "computer-course-enrollme-e0cad",
+    storageBucket: "computer-course-enrollme-e0cad.firebasestorage.app",
+    messagingSenderId: "629890393995",
+    appId: "1:629890393995:web:f02871bb17c5d0d580b18e"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  let mode = "login";
+
+  const form = document.getElementById("authForm");
+  const message = document.getElementById("message");
+  const submitBtn = document.getElementById("submitBtn");
+
+  const loginTab = document.getElementById("loginTab");
+  const signupTab = document.getElementById("signupTab");
+
+  function setMode(newMode) {
+    mode = newMode;
+
+    document.getElementById("heading").textContent =
+      mode === "login" ? "Student Login" : "Create Account";
+
+    submitBtn.textContent =
+      mode === "login" ? "Login" : "Sign Up";
+
+    loginTab.classList.toggle("active", mode === "login");
+    signupTab.classList.toggle("active", mode === "signup");
+
+    message.textContent = "";
+  }
+
+  loginTab.addEventListener("click", () => setMode("login"));
+  signupTab.addEventListener("click", () => setMode("signup"));
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    submitBtn.disabled = true;
+    message.textContent = "Please wait...";
+
+    try {
+      if (mode === "signup") {
+        await createUserWithEmailAndPassword(auth, email, password);
+        message.textContent = "Account created successfully!";
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        message.textContent = "Login successful!";
+      }
+
+      message.style.color = "green";
+      form.reset();
+
+    } catch (error) {
+      message.style.color = "red";
+      message.textContent = error.message;
+    }
+
+    submitBtn.disabled = false;
+  });
+
+</script>
 
 </body>
 </html>
