@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Enrollment | Computer Academy</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fc;
+      color: #222;
+    }
+
+    header {
+      background: #142b55;
+      color: white;
+      padding: 22px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 45px auto;
+      padding: 20px;
+    }
+
+    .form-box {
+      background: white;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+    }
+
+    h1 {
+      text-align: center;
+      color: #142b55;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #2878d0;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: bold;
+      margin-top: 25px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #142b55;
+    }
+
+    footer {
+      background: #142b55;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    @media(max-width: 600px) {
+      header {
+        flex-direction: column;
+      }
+
+      .form-box {
+        padding: 25px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h2>Computer Academy</h2>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="enrollment.html">Enroll</a>
+      <a href="authentication.html">Login</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="form-box">
+      <h1>Student Enrollment</h1>
+      <p class="subtitle">Fill in the details to enroll in a course.</p>
+
+      <form id="enrollmentForm">
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="course">Select Course</label>
+        <select id="course" required>
+          <option value="">Choose a course</option>
+          <option value="Basic Computer">Basic Computer</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Python Programming">Python Programming</option>
+          <option value="MS Office">MS Office</option>
+          <option value="Database Management">Database Management</option>
+          <option value="Graphic Design">Graphic Design</option>
+        </select>
+
+        <button type="submit">Submit Enrollment</button>
+
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Computer Academy | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById("enrollmentForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Form design is ready! Firebase connection will be added next.");
+    });
+  </script>
+
+</body>
+</html>
