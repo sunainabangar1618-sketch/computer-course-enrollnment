@@ -3,168 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Enrollment | Computer Academy</title>
-
+  <title>Course Enrollment</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
     body {
-      background: #f4f7fc;
-      color: #222;
-    }
-
-    header {
-      background: #142b55;
-      color: white;
-      padding: 22px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 15px;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 45px auto;
+      font-family: Arial, sans-serif;
+      background: #f2f5ff;
+      margin: 0;
       padding: 20px;
     }
 
-    .form-box {
+    .container {
+      max-width: 450px;
+      margin: 40px auto;
       background: white;
-      padding: 35px;
+      padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+      box-shadow: 0 2px 12px #ccc;
     }
 
     h1 {
       text-align: center;
-      color: #142b55;
-      margin-bottom: 12px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 28px;
+      color: #243b80;
     }
 
     label {
       display: block;
-      margin: 16px 0 8px;
+      margin-top: 15px;
       font-weight: bold;
-      color: #333;
     }
 
-    input, select {
+    input, select, button {
       width: 100%;
-      padding: 13px;
+      padding: 12px;
+      margin-top: 7px;
+      box-sizing: border-box;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 15px;
+      font-size: 16px;
     }
 
     button {
-      width: 100%;
-      padding: 14px;
-      background: #2878d0;
+      margin-top: 22px;
+      background: #243b80;
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 17px;
-      font-weight: bold;
-      margin-top: 25px;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #142b55;
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
     }
 
-    footer {
-      background: #142b55;
-      color: white;
+    #message {
+      margin-top: 15px;
       text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-
-    @media(max-width: 600px) {
-      header {
-        flex-direction: column;
-      }
-
-      .form-box {
-        padding: 25px 18px;
-      }
+      overflow-wrap: anywhere;
     }
   </style>
 </head>
 
 <body>
-
-  <header>
-    <h2>Computer Academy</h2>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="enrollment.html">Enroll</a>
-      <a href="authentication.html">Login</a>
-    </nav>
-  </header>
-
   <div class="container">
-    <div class="form-box">
-      <h1>Student Enrollment</h1>
-      <p class="subtitle">Fill in the details to enroll in a course.</p>
+    <h1>Course Enrollment</h1>
 
-      <form id="enrollmentForm">
+    <p id="loginStatus">Checking login status...</p>
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required>
+    <form id="enrollmentForm">
+      <label for="name">Full Name</label>
+      <input id="name" type="text" required>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+      <label for="email">Email</label>
+      <input id="email" type="email" readonly>
 
-        <label for="course">Select Course</label>
-        <select id="course" required>
-          <option value="">Choose a course</option>
-          <option value="Basic Computer">Basic Computer</option>
-          <option value="Web Development">Web Development</option>
-          <option value="Python Programming">Python Programming</option>
-          <option value="MS Office">MS Office</option>
-          <option value="Database Management">Database Management</option>
-          <option value="Graphic Design">Graphic Design</option>
-        </select>
+      <label for="course">Select Course</label>
+      <select id="course" required>
+        <option value="">Choose a course</option>
+        <option value="Web Development">Web Development</option>
+        <option value="Python Programming">Python Programming</option>
+        <option value="Java Programming">Java Programming</option>
+        <option value="C Programming">C Programming</option>
+        <option value="Data Science">Data Science</option>
+        <option value="Computer Basics">Computer Basics</option>
+      </select>
 
-        <button type="submit">Submit Enrollment</button>
+      <button id="submitButton" type="submit" disabled>
+        Submit Enrollment
+      </button>
+    </form>
 
-      </form>
-    </div>
+    <p id="message"></p>
+    <p><a href="authentication.html">Go to Login / Sign Up</a></p>
+    <p><a href="index.html">Back to Home</a></p>
   </div>
 
-  <footer>
-    <p>© 2026 Computer Academy | All Rights Reserved</p>
-  </footer>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-  <script>
-    document.getElementById("enrollmentForm").addEventListener("submit", function(event) {
+    import {
+      getAuth,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCbDOwqgUGplj6vY_DcymHK1HkjHN9aJOg",
+      authDomain: "computer-course-enrollme-e0cad.firebaseapp.com",
+      projectId: "computer-course-enrollme-e0cad",
+      storageBucket: "computer-course-enrollme-e0cad.firebasestorage.app",
+      messagingSenderId: "629890393995",
+      appId: "1:629890393995:web:f02871bb17c5d0d580b18e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("enrollmentForm");
+    const emailInput = document.getElementById("email");
+    const nameInput = document.getElementById("name");
+    const courseInput = document.getElementById("course");
+    const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+    const loginStatus = document.getElementById("loginStatus");
+
+    let currentUser = null;
+
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+
+      if (user) {
+        loginStatus.textContent = "You are logged in.";
+        emailInput.value = user.email || "";
+        submitButton.disabled = false;
+      } else {
+        loginStatus.textContent = "Please log in before enrolling.";
+        emailInput.value = "";
+        submitButton.disabled = true;
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      alert("Form design is ready! Firebase connection will be added next.");
+      message.textContent = "";
+
+      if (!currentUser) {
+        message.textContent = "Please log in first.";
+        return;
+      }
+
+      const name = nameInput.value.trim();
+      const course = courseInput.value;
+
+      if (!name || !course) {
+        message.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+
+      try {
+        await addDoc(collection(db, "enrollments"), {
+          name: name,
+          email: currentUser.email,
+          course: course,
+          uid: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+
+        message.textContent = "Enrollment submitted successfully!";
+        form.reset();
+        emailInput.value = currentUser.email || "";
+
+      } catch (error) {
+        console.error(error);
+        message.textContent = "Could not submit enrollment. Please try again.";
+      }
+
+      submitButton.disabled = !currentUser;
+      submitButton.textContent = "Submit Enrollment";
     });
   </script>
-
 </body>
 </html>
